@@ -1,10 +1,10 @@
 const result = document.querySelector(".result");
-const buttons = document.querySelector(".buttons button")
+const buttons = document.querySelectorAll(".buttons button");
 
-let currentNumber = ""
-let firstOperand = null
-let operator = null
-let restart = false
+let currentNumber = "";
+let firstOperand = null;
+let operator = null;
+let restart = false;
 
 function updateResult(originClear = false) {
     result.innerText = originClear ? 0 : currentNumber.replace(".", ",");
@@ -12,16 +12,64 @@ function updateResult(originClear = false) {
 
 function addDigit(digit) {
   if (digit === "," && (currentNumber.includes(",") || !currentNumber))
-    return
+    return;
 
   if(restart) {
-    currentNumber = digit
-    restart = false
+    currentNumber = digit;
+    restart = false;
   } else {
     currentNumber += digit;
   }
 
-  updateResult()
+  updateResult(); //atualizar o bloco de codigo acima em tela
+}
+
+function setOperator (newOperator) {
+  if(currentNumber) {
+      firstOperand = parseFloat(currentNumber.replace(",","."));
+      currentNumber = "";
+  }
+
+  operator = newOperator;
+}
+
+function calculate() {
+  if (operador === null || firstOperand ===null) return;
+  let secondOperand = parseFloat(currentNumber.replace("," , "."));
+  let resultValue;
+
+  switch (operador) {
+    case "+":
+      resultValue = firstOperand + secondOperand;
+      break;
+
+    case "-":
+      resultValue = firstOperand - secondOperand;
+      break;
+
+    case "x":
+      resultValue = firstOperand * secondOperand;
+      break;
+
+    case "÷":
+      resultValue = firstOperand / secondOperand;
+      break;
+    default:
+      return;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 buttons.forEach((button)=> {
@@ -29,6 +77,8 @@ buttons.forEach((button)=> {
       const buttonText = button.innerText;
       if (/^[0-9,]+$/.test(buttonText)) {
         addDigit(buttonText)
-      }  
+      }  else if(["+", "-", "x", "÷"].includes(buttonText)) {
+        setOperator(buttonText);
+      }
     })
 })
