@@ -26,6 +26,8 @@ function addDigit(digit) {
 
 function setOperator (newOperator) {
   if(currentNumber) {
+    calculate();
+
       firstOperand = parseFloat(currentNumber.replace(",","."));
       currentNumber = "";
   }
@@ -34,7 +36,7 @@ function setOperator (newOperator) {
 }
 
 function calculate() {
-  if (operador === null || firstOperand ===null) return;
+  if (operador === null || firstOperand === null) return;
   let secondOperand = parseFloat(currentNumber.replace("," , "."));
   let resultValue;
 
@@ -42,15 +44,12 @@ function calculate() {
     case "+":
       resultValue = firstOperand + secondOperand;
       break;
-
     case "-":
       resultValue = firstOperand - secondOperand;
       break;
-
     case "x":
       resultValue = firstOperand * secondOperand;
       break;
-
     case "÷":
       resultValue = firstOperand / secondOperand;
       break;
@@ -58,25 +57,33 @@ function calculate() {
       return;
   }
 
+  if (resultValue.toString().split(".") [1] ?.length > 5) {
+    currentNumber =parseFloat(resultValue.toFixed(5)).toString();
+  } else {
+    currentNumber = resultValue.toString();
+  }
 
-
-
-
-
-
-
-
-
-
-
+  operador = null;
+  firstOperand = null;
+  restart = true;
+  percentageValue = null;
+  updateResult();
 
 }
+
+function clearCalculator() {
+  currentNumber = "";
+  firstOperand = null;
+  operator = null;
+  updateResult(true);
+}
+
 
 buttons.forEach((button)=> {
     button.addEventListener("click", () =>{
       const buttonText = button.innerText;
       if (/^[0-9,]+$/.test(buttonText)) {
-        addDigit(buttonText)
+        addDigit(buttonText);
       }  else if(["+", "-", "x", "÷"].includes(buttonText)) {
         setOperator(buttonText);
       }
