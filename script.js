@@ -8,10 +8,6 @@ let restart = false;
 
 function updateResult(originClear = false) {
   result.innerText = originClear ? 0 : currentNumber.replace(".", ",");
-  if (displayNumber.length > 10) {
-    displayNumber = displayNumber.slice(0, 10);
-  }
-  result.innerText = displayNumber;
 }
 
 function addDigit(digit) {
@@ -21,15 +17,14 @@ function addDigit(digit) {
     restart = false;
   } else {
     currentNumber += digit;
-  }
+
 
   updateResult(); //atualizar o bloco de codigo acima em tela
 }
-
+}
 function setOperator(newOperator) {
   if (currentNumber) {
     calculate();
-
     firstOperand = parseFloat(currentNumber.replace(",", "."));
     currentNumber = "";
   }
@@ -43,7 +38,6 @@ function calculate() {
   let resultValue;
 
   switch (operator) {
-  
     case "+":
       resultValue = firstOperand + secondOperand;
       break;
