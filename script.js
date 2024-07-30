@@ -18,9 +18,8 @@ function addDigit(digit) {
   } else {
     currentNumber += digit;
 
-
-  updateResult(); //atualizar o bloco de codigo acima em tela
-}
+    updateResult(); //atualizar o bloco de codigo acima em tela
+  }
 }
 function setOperator(newOperator) {
   if (currentNumber) {
